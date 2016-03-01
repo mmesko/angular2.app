@@ -1,0 +1,10 @@
+.container-narrow {
+        margin: 0 auto;
+        max-width: 900px;
+      }
+      
+       .container-narrow > hr {
+        margin: 20px 0;
+      }
+      
+         

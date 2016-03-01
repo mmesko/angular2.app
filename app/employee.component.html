@@ -1,0 +1,123 @@
+
+<div class="container-narrow">
+    <hr>
+<h4 class="mainName">EMPLOYEES</h4>
+ 
+<hr><br/>
+ <div class="row" >
+   <button (click)="showAdd()" title="Add" class="btn btn-success pull-left"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add employee </button>
+  <div class="col-sm-6 ">
+    <div class="input-group ">
+       <input type="text"  #listFilter (keyup)='0' placeholder="Search for..." class="searchfield">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+    </div><!-- /input-group -->
+      
+  </div>
+           
+        </div>
+    <br/><br/><br/><br/>
+
+    <table align="center">
+            <thead>
+                <tr>                   
+                    <td><strong>Employee</strong></td>
+                     <td><strong>Department</strong></td>   
+                    <td><strong>Salary</strong></td>
+                    <td><strong>Edit</strong></td>
+                    <td><strong>Delete</strong></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="#employee of employees| searchString:listFilter.value">
+                    <td>{{employee.employeeName}}</td>
+                    <td>{{employee.Department.departmentName}}, {{employee.Department.departmentLocation}}</td>
+                    <td>{{employee.salary}}</td>
+                    <td><button class="btnEdit" (click)="showEdit(employee)" >Edit</button></td>
+                    <td><button class="btnDelete" (click)=deleteEmployee(employee)>Delete</button></td>             
+                </tr>
+                
+            </tbody>
+        </table>
+  
+   <br/><br/>
+     
+     <div class="row">
+    <button *ngIf="pageNumber!== 1" class="btn btn-sm btn-warning" (click)="back($event)">
+                <span class="glyphicon glyphicon-menu-left"></span>
+                &laquo; Previous
+    </button>
+                   </div>
+     
+     <div class="rowRight">
+         
+          <button *ngIf="employees" class="btn btn-sm btn-warning" (click)="next($event)">
+             Next &raquo;
+              <span class="glyphicon glyphicon-menu-right  "></span>
+     </button>
+     </div>
+     <br/><br/>
+     
+  <form  #f="ngForm" [hidden]="!showAddView" align="center">
+        <div>
+            <label for="editAbrv">Employee name:</label><br>
+              <input type="text" [(ngModel)]="addNew.employeeName" ngControl="employeeName" >    
+        </div>
+           <div>
+            <label for="editTitle">Department:</label><br>
+            <select [(ngModel)]="addNew.departmentNo" style="width: 180px">
+               <option *ngFor="#department of departments" [value]="department.departmentNo">{{department.departmentName}}, {{department.departmentLocation}}</option>
+           </select>
+        </div>
+       <div>
+            <label for="editTitle">Department:</label><br>
+            <select [(ngModel)]="addNew.Department" style="width: 180px">
+               <option *ngFor="#department of departments" [value]="department.departmentNo">{{department.departmentName}}, {{department.departmentLocation}}</option>
+           </select>
+        </div>
+        <div>
+            <label for="editAbrv">Salary:</label><br>
+             <input type="text" [(ngModel)]="addNew.salary" ngControl="salary">    
+        </div>
+   
+        <div>
+            <a href="javascript:void(0);" (click)="addEmployee(addNew)" title="Add">
+                Save
+            </a>
+            <a href="javascript:void(0);" (click)="showHide($event)" >
+                Cancel
+            </a>
+        </div>
+</form>
+
+  <form  #e="ngForm" [hidden]="!showEditView" align="center">
+       <div>
+            <label for="editTitle">Department:</label><br>
+            <select [(ngModel)]="selected.departmentNo" style="width: 180px">
+               <option *ngFor="#department of departments" [value]="department.departmentNo">{{department.departmentNo}}, {{department.departmentName}}</option>
+           </select>
+        </div>
+        <div>
+            <label for="editAbrv">Employee name:</label><br>
+              <input type="text" [(ngModel)]="selected.employeeName" ngControl="employeeName"  >    
+        </div>
+        <div>
+            <label for="editAbrv">Salary:</label><br>
+             <input type="text" [(ngModel)]="selected.salary" ngControl="salary">    
+        </div>
+   
+        <div>
+            <a href="javascript:void(0);" (click)="editEmployee(selected); showEditView=false;" title="Edit">
+                Save
+            </a>
+            <a href="javascript:void(0);" (click)="showHideEdit($event); showEditView=false">
+                Cancel
+            </a>
+        </div>
+</form>
+      <hr>
+<div class="footer" align="center">
+        <p>&copy; Company 2016</p>
+      </div>
+</div>
